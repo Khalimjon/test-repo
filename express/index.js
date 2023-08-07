@@ -6,7 +6,9 @@ const helmet = require("helmet");
 const morgan = require('morgan')
 const { urlencoded } = require("express");
 const config = require("config")
-const books = require('./routers/books')
+const books = require('./routers/books');
+const main = require('./routers/main');
+const path = require('path')
 
 // app.use(logger.log)
 app.use(express.json());
@@ -14,7 +16,8 @@ app.use(helmet());
 app.use(logger.auth);
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
-app.use('/api/books', books)
+app.use('/api/books', books);
+app.use('/', main);
 
 if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
@@ -25,14 +28,12 @@ if(app.get('env') === 'development'){
 
 
 console.log(process.env.NODE_ENV)
-console.log(config.get("name"));
-console.log(config.get("mailServer.host"));
-console.log(config.get("mailServer.password"));
+// console.log(config.get("name"));
+// console.log(config.get("mailServer.host"));
+// console.log(config.get("mailServer.password"));
 
 
-app.get('/',  (req, res) =>{
-    res.render('index', {title: 'my express app', greeting: 'assalomu alaykum'})
-});
+
 
 
 
