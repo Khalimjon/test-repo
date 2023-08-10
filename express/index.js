@@ -8,7 +8,8 @@ const { urlencoded } = require("express");
 const config = require("config")
 const books = require('./routers/books');
 const main = require('./routers/main');
-const path = require('path')
+const path = require("path");
+
 
 // app.use(logger.log)
 app.use(express.json());
@@ -18,6 +19,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use('/api/books', books);
 app.use('/', main);
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
 if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
